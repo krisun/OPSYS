@@ -19,22 +19,22 @@ public class Process implements Constants
 	/** The color of this process */
 	private Color color;
 	/** The amount of memory needed by this process */
-    private long memoryNeeded;
+	private long memoryNeeded;
 	/** The amount of cpu time still needed by this process */
-    private long cpuTimeNeeded;
+	private long cpuTimeNeeded;
 	/** The average time between the need for I/O operations for this process */
-    private long avgIoInterval;
+	private long avgIoInterval;
 	/** The time left until the next time this process needs I/O */
-    private long timeToNextIoOperation = 0;
+	private long timeToNextIoOperation = 0;
 
 	/** The time that this process has spent waiting in the memory queue */
 	private long timeSpentWaitingForMemory = 0;
 	/** The time that this process has spent waiting in the CPU queue */
 	private long timeSpentInReadyQueue = 0;
 	/** The time that this process has spent processing */
-    private long timeSpentInCpu = 0;
+	private long timeSpentInCpu = 0;
 	/** The time that this process has spent waiting in the I/O queue */
-    private long timeSpentWaitingForIo = 0;
+	private long timeSpentWaitingForIo = 0;
 	/** The time that this process has spent performing I/O */
 	private long timeSpentInIo = 0;
 
@@ -91,27 +91,42 @@ public class Process implements Constants
 	/**
 	 * This method is called when the process leaves the memory queue (and
 	 * enters the cpu queue).
-     * @param clock The time when the process leaves the memory queue.
-     */
-    public void leftMemoryQueue(long clock) {
-		  timeSpentWaitingForMemory += clock - timeOfLastEvent;
-		  timeOfLastEvent = clock;
-    }
+	 * @param clock The time when the process leaves the memory queue.
+	 */
+	public void leftMemoryQueue(long clock) {
+		timeSpentWaitingForMemory += clock - timeOfLastEvent;
+		timeOfLastEvent = clock;
+	}
 
-    /**
+	/**
+	 * This method is similarly called when process leaves the IO queue
+	 * @param clock The time when the process leaves the queue
+	 */
+	public void leftIoQueue(long clock) {
+		timeSpentWaitingForIo += clock - timeOfLastEvent;
+		timeOfLastEvent = clock;
+	}
+
+	//alltid pass på at slike oppdateringer også oppdaterer timeOfLastEvent variabelen til clock TODO
+	public void leftCpuQueue(long clock) {
+		timeSpentInReadyQueue += clock - timeOfLastEvent;
+		timeOfLastEvent = clock;
+	}
+
+	/**
 	 * Returns the amount of memory needed by this process.
-     * @return	The amount of memory needed by this process.
-     */
+	 * @return	The amount of memory needed by this process.
+	 */
 	public long getMemoryNeeded() {
 		return memoryNeeded;
 	}
 
-    /**
+	/**
 	 * Updates the statistics collected by the given Statistic object, adding
 	 * data collected by this process. This method is called when the process
 	 * leaves the system.
-     * @param statistics	The Statistics object to be updated.
-     */
+	 * @param statistics	The Statistics object to be updated.
+	 */
 	public void updateStatistics(Statistics statistics) {
 		statistics.totalTimeSpentWaitingForMemory += timeSpentWaitingForMemory;
 		statistics.nofCompletedProcesses++;
