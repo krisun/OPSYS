@@ -9,6 +9,10 @@ public class Simulator implements Constants
     private EventQueue eventQueue;
 	/** Reference to the memory unit */
     private Memory memory;
+    /** Reference to the CPU unit */
+    private CPU cpu;
+    /** Reference to the IO unit */
+    private IO io;
 	/** Reference to the GUI interface */
 	private Gui gui;
 	/** Reference to the statistics collector */
