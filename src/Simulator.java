@@ -45,6 +45,8 @@ public class Simulator implements Constants
 		statistics = new Statistics();
 		eventQueue = new EventQueue();
 		memory = new Memory(memoryQueue, memorySize, statistics);
+		cpu = new CPU(cpuQueue, maxCpuTime, statistics);
+		io = new IO(ioQueue, avgIoTime, statistics);
 		clock = 0;
 		// Add code as needed
     }
