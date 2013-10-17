@@ -1,4 +1,3 @@
-
 public class IO {
 	/** The queue of processes waiting for io */
 	private Queue ioQueue;
@@ -10,7 +9,10 @@ public class IO {
 
 	public IO(Queue ioQueue, long avgIoTime, Statistics statistics) {
 		// TODO Auto-generated constructor stub
+		this.ioQueue = ioQueue;
+		this.avgIoTime = avgIoTime;
+		this.statistics = statistics;
 	}
 	
-	//put back to CPU queue metode må implementeres
+	//put back to CPU queue metode mï¿½ implementeres
 }
